@@ -1,0 +1,58 @@
+services:
+  registry:
+    image: registry:2
+    container_name: workshop-registry
+    restart: always
+    expose:
+      - "5000"
+    volumes:
+      - registry-data:/var/lib/registry
+      - ./config.yml:/etc/docker/registry/config.yml
+    networks:
+      - internal
+
+  fileserver:
+    image: nginx:alpine
+    container_name: workshop-files
+    restart: always
+    expose:
+      - "80"
+    volumes:
+      - ./www:/usr/share/nginx/html:ro
+    networks:
+      - internal
+
+  ui:
+    image: joxit/docker-registry-ui:latest
+    container_name: workshop-ui
+    expose:
+      - "80"
+    environment:
+      - REGISTRY_URL=https://registry.labs.dae.mn
+    networks:
+      - internal
+
+  proxy:
+    image: nginx:alpine
+    container_name: workshop-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs/labs:/etc/nginx/certs:ro
+      - ./www:/usr/share/nginx/html:ro
+    depends_on:
+      - registry
+      - fileserver
+      - ui
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  registry-data:

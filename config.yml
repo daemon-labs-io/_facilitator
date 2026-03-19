@@ -1,0 +1,21 @@
+version: 0.1
+log:
+  level: info
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+  delete:
+    enabled: true
+http:
+  addr: :5000
+  headers:
+    X-Content-Type-Options: [nosniff]
+    Access-Control-Allow-Origin: [https://ui.labs.dae.mn]
+    Access-Control-Allow-Methods: [GET, POST, PUT, DELETE, OPTIONS]
+    Access-Control-Allow-Headers: [Authorization, Content-Type]
+    Access-Control-Expose-Headers: [Docker-Content-Digest]
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3

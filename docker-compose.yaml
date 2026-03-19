@@ -4,7 +4,7 @@ services:
     container_name: workshop-registry
     restart: always
     expose:
-      - "5000"
+      - 5000
     volumes:
       - registry-data:/var/lib/registry
       - ./config.yml:/etc/docker/registry/config.yml
@@ -15,40 +15,18 @@ services:
     image: nginx:alpine
     container_name: workshop-files
     restart: always
-    shm_size: 512m
     expose:
-      - "80"
+      - 80
     volumes:
       - ./www:/usr/share/nginx/html:ro
-      - ./nginx/fileserver.conf:/etc/nginx/nginx.conf:ro
-    tmpfs:
-      - /tmp/nginx-cache:size=2G,mode=1777
-    sysctls:
-      - net.core.somaxconn=65535
-      - net.ipv4.tcp_max_tw_buckets=1440000
-      - net.ipv4.tcp_tw_reuse=1
-      - net.ipv4.tcp_fin_timeout=15
-      - net.ipv4.tcp_syncookies=1
-    ulimits:
-      nofile:
-        soft: 65535
-        hard: 65535
     networks:
       - internal
-    deploy:
-      resources:
-        limits:
-          memory: 2G
-          cpus: "2.0"
-        reservations:
-          memory: 1G
-          cpus: "1.0"
 
   ui:
     image: joxit/docker-registry-ui:latest
     container_name: workshop-ui
     expose:
-      - "80"
+      - 80
     environment:
       - REGISTRY_URL=https://registry.labs.dae.mn
     networks:
@@ -58,48 +36,23 @@ services:
     image: nginx:alpine
     container_name: workshop-proxy
     restart: always
-    shm_size: 1g
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./certs/labs:/etc/nginx/certs:ro
       - ./www:/usr/share/nginx/html:ro
-    sysctls:
-      - net.core.somaxconn=65535
-      - net.ipv4.tcp_max_tw_buckets=1440000
-      - net.ipv4.tcp_tw_reuse=1
-      - net.ipv4.tcp_fin_timeout=15
-      - net.ipv4.tcp_syncookies=1
-      - net.ipv4.tcp_window_scaling=1
-    ulimits:
-      nofile:
-        soft: 65535
-        hard: 65535
     depends_on:
       - registry
       - fileserver
       - ui
     networks:
       - internal
-    deploy:
-      resources:
-        limits:
-          memory: 2G
-          cpus: "2.0"
-        reservations:
-          memory: 1G
-          cpus: "1.0"
 
 networks:
   internal:
     driver: bridge
-    driver_opts:
-      com.docker.network.driver.mtu: 9000
-      com.docker.network.bridge.enable_ip_masquerade: "true"
-      com.docker.network.bridge.enable_icc: "true"
 
 volumes:
   registry-data:
-  fileserver-data:

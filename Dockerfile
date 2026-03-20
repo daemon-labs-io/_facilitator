@@ -7,8 +7,12 @@ HEALTHCHECK --interval=1s --timeout=1s --retries=30 CMD curl -f http://localhost
 FROM nginx-base AS proxy
 
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx/docker-entrypoint-warmup.sh /docker-entrypoint-warmup.sh
 COPY ./certs/labs /etc/nginx/certs
 COPY ./www /usr/share/nginx/html
+
+ENTRYPOINT ["/docker-entrypoint-warmup.sh"]
+CMD ["nginx", "-g", "daemon off;"]
 
 # fileserver
 FROM nginx-base AS fileserver

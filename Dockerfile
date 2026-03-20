@@ -13,6 +13,7 @@ COPY ./www /usr/share/nginx/html
 # fileserver
 FROM nginx-base AS fileserver
 
+COPY ./nginx/fileserver.conf /etc/nginx/nginx.conf
 COPY ./www /usr/share/nginx/html
 
 # registry

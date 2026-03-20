@@ -3,7 +3,7 @@ repository:
   description: Workshop facilitator
   homepage: https://github.com/daemon-labs-io/_facilitator
   topics: daemon-labs, daemon-labs-io, facilitator
-  private: true
+  private: false
   has_issues: true
   has_projects: false
   has_wiki: false

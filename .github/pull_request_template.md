@@ -28,7 +28,7 @@
 - [ ] **Shell commands:** Commands use only **universal syntax** (e.g., `docker compose up`, avoiding complex OS-specific utilities).
 - [ ] **Terminal check:** The instructions are clear and functional when run from common terminals across Mac, Windows, Chromebook (Crosh/Terminal), and Linux.
 - [ ] **Case sensitivity:** Filenames are referenced correctly using **case-sensitive** best practices to prevent errors when pulled down on different operating systems.
-- [ ] **Prerequisites slignment:** The changes do not introduce any new local tools that are not explicitly documented in the **Prerequisites Guide**.
+- [ ] **Prerequisites alignment:** The changes do not introduce any new local tools that are not explicitly documented in the **Prerequisites Guide**.
 
 ---
 

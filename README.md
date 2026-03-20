@@ -4,11 +4,11 @@ A self-hosted Docker registry with Let's Encrypt TLS certificates, file server, 
 
 ## Architecture
 
-| Service | Domain | Description |
-|---------|--------|-------------|
+| Service  | Domain                 | Description                          |
+| -------- | ---------------------- | ------------------------------------ |
 | Registry | `registry.labs.dae.mn` | Docker registry (port 443 via nginx) |
-| Files | `files.labs.dae.mn` | Static file server (port 443) |
-| UI | `ui.labs.dae.mn` | Registry web UI (port 443) |
+| Files    | `files.labs.dae.mn`    | Static file server (port 443)        |
+| UI       | `ui.labs.dae.mn`       | Registry web UI (port 443)           |
 
 ## Prerequisites
 
@@ -29,6 +29,7 @@ docker-compose up -d
 Configure your router's DNS to point to this machine's IP address for `*.labs.dae.mn` domains.
 
 For each `*.labs.dae.mn` domain, add an A record pointing to the host IP:
+
 - `registry.labs.dae.mn` → `<host-ip>`
 - `files.labs.dae.mn` → `<host-ip>`
 - `ui.labs.dae.mn` → `<host-ip>`
@@ -36,7 +37,8 @@ For each `*.labs.dae.mn` domain, add an A record pointing to the host IP:
 ### 3. (Optional) Hosts File Alternative
 
 If DNS configuration is not possible, add to `/etc/hosts` (macOS/Linux) or `C:\Windows\System32\drivers\etc\hosts` (Windows):
-```
+
+```text
 <workshop-server-ip> registry.labs.dae.mn files.labs.dae.mn ui.labs.dae.mn
 ```
 
@@ -57,13 +59,14 @@ docker pull registry.labs.dae.mn/myimage:latest
 
 ### Access Registry UI
 
-Open https://ui.labs.dae.mn in a browser (automatically trusted Let's Encrypt certificate).
+Open [https://ui.labs.dae.mn](https://ui.labs.dae.mn) in a browser (automatically trusted Let's Encrypt certificate).
 
 ### Access Static Files
 
 Place files in the `www/` directory and access them at:
-- http://files.labs.dae.mn
-- https://files.labs.dae.mn
+
+- [http://files.labs.dae.mn](http://files.labs.dae.mn)
+- [https://files.labs.dae.mn](https://files.labs.dae.mn)
 
 ## Certificate Details
 
@@ -93,17 +96,19 @@ docker-compose restart proxy
 ## Troubleshooting
 
 ### Certificate errors
+
 - Ensure CA certificate is installed in system trust store
 - Restart Docker runtime after installing certificate
 - For Rancher Desktop: Preferences → Certificate → Add CA certificate
 
 ### Can't access services
+
 - Check Docker containers are running: `docker-compose ps`
 - Check firewall allows ports 80, 443
 
 ## File Structure
 
-```
+```text
 .
 ├── docker-compose.yaml      # Main compose file
 ├── config.yml               # Registry configuration

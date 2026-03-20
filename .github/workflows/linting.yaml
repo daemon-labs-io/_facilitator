@@ -1,0 +1,22 @@
+---
+name: Linting
+on:
+  pull_request: null
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+  packages: read
+  issues: write
+  pull-requests: write
+  statuses: write
+jobs:
+  linting:
+    uses: daemon-labs-io/.github/.github/workflows/reusable-linting.yaml@main
+    permissions:
+      contents: read
+      packages: read
+      issues: write
+      pull-requests: write
+      statuses: write

@@ -10,8 +10,6 @@ services:
     depends_on:
       registry:
         condition: service_healthy
-      fileserver:
-        condition: service_healthy
       ui:
         condition: service_healthy
     networks:
@@ -30,18 +28,6 @@ services:
       - registry-data:/var/lib/registry
     networks:
       - internal
-  fileserver:
-    build:
-      target: fileserver
-    container_name: workshop-fileserver
-    restart: always
-    networks:
-      - internal
-    shm_size: 128m
-    ulimits:
-      nofile:
-        soft: 65535
-        hard: 65535
   ui:
     build:
       target: ui

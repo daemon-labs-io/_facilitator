@@ -38,7 +38,7 @@ For each `*.labs.dae.mn` domain, add an A record pointing to the host IP:
 
 If DNS configuration is not possible, add to `/etc/hosts` (macOS/Linux) or `C:\Windows\System32\drivers\etc\hosts` (Windows):
 
-```
+```text
 <workshop-server-ip> registry.labs.dae.mn files.labs.dae.mn ui.labs.dae.mn
 ```
 
@@ -59,14 +59,14 @@ docker pull registry.labs.dae.mn/myimage:latest
 
 ### Access Registry UI
 
-Open https://ui.labs.dae.mn in a browser (automatically trusted Let's Encrypt certificate).
+Open [https://ui.labs.dae.mn](https://ui.labs.dae.mn) in a browser (automatically trusted Let's Encrypt certificate).
 
 ### Access Static Files
 
 Place files in the `www/` directory and access them at:
 
-- http://files.labs.dae.mn
-- https://files.labs.dae.mn
+- [http://files.labs.dae.mn](http://files.labs.dae.mn)
+- [https://files.labs.dae.mn](https://files.labs.dae.mn)
 
 ## Certificate Details
 
@@ -108,7 +108,7 @@ docker-compose restart proxy
 
 ## File Structure
 
-```
+```text
 .
 ├── docker-compose.yaml      # Main compose file
 ├── config.yml               # Registry configuration

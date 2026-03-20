@@ -16,6 +16,11 @@ services:
         condition: service_healthy
     networks:
       - internal
+    shm_size: 256m
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
   registry:
     build:
       target: registry
@@ -32,6 +37,11 @@ services:
     restart: always
     networks:
       - internal
+    shm_size: 128m
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
   ui:
     build:
       target: ui

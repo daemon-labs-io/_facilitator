@@ -1,0 +1,72 @@
+repository:
+  name: _facilitator
+  description: Workshop facilitator
+  homepage: https://github.com/daemon-labs-io/_facilitator
+  topics: daemon-labs, daemon-labs-io, facilitator
+  private: true
+  has_issues: true
+  has_projects: false
+  has_wiki: false
+  has_downloads: false
+  default_branch: main
+  allow_squash_merge: true
+  allow_merge_commit: true
+  allow_rebase_merge: true
+  delete_branch_on_merge: true
+  enable_automated_security_fixes: true
+  enable_vulnerability_alerts: true
+teams:
+  - name: daemonites
+    permission: admin
+rulesets:
+  - name: Prevent destruction of the default branch
+    target: branch
+    enforcement: active
+    conditions:
+      ref_name:
+        include:
+          - "~DEFAULT_BRANCH"
+        exclude: []
+    rules:
+      - type: deletion
+      - type: non_fast_forward
+  - name: Changes must be reviewed
+    target: branch
+    enforcement: active
+    bypass_actors:
+      - actor_id: null
+        actor_type: OrganizationAdmin
+        bypass_mode: pull_request
+    conditions:
+      ref_name:
+        include:
+          - "~DEFAULT_BRANCH"
+        exclude: []
+    rules:
+      - type: pull_request
+        parameters:
+          allowed_merge_methods:
+            - squash
+          dismiss_stale_reviews_on_push: true
+          require_code_owner_review: true
+          require_last_push_approval: true
+          required_approving_review_count: 1
+          required_review_thread_resolution: true
+  - name: Changes must pass status checks
+    target: branch
+    enforcement: active
+    bypass_actors:
+      - actor_id: null
+        actor_type: OrganizationAdmin
+        bypass_mode: pull_request
+    conditions:
+      ref_name:
+        include:
+          - "~DEFAULT_BRANCH"
+        exclude: []
+    rules:
+      - type: required_status_checks
+        parameters:
+          required_status_checks:
+            - context: linting / Linting
+          strict_required_status_checks_policy: true
